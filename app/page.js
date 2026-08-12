@@ -8,6 +8,7 @@ import { InteractiveFolderGallery } from '../components/ui/interactive-folder-ga
 import MatrixRain from '../components/ui/matrix-rain';
 import CircularShareButton from '../components/ui/circular-share-button';
 import RevealHoverButton from '../components/ui/reveal-hover-button';
+import SphereImageGrid from '../components/SphereImageGrid';
 
 const parallaxImages = [
   {
@@ -307,14 +308,13 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="center-column w-col w-col-4" style={{ display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
-                <img
-                  src="https://cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/6700235065b95d5e11bbe4de_HTGAYW_FreeTraining_Graphic%20(1).webp"
-                  loading="lazy"
-                  width="270"
-                  alt="Free Audio Training Graphic"
-                  className="htgayw_push_img"
-                  style={{ width: '100%', maxWidth: '270px', height: 'auto', marginTop: '-180px' }}
+              <div className="center-column w-col w-col-4" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, overflow: 'visible', marginLeft: '20px', transform: 'translateX(10px)' }}>
+                <SphereImageGrid
+                  containerSize={550}
+                  sphereRadius={210}
+                  baseImageScale={0.18}
+                  autoRotate={true}
+                  autoRotateSpeed={0.25}
                 />
               </div>
 

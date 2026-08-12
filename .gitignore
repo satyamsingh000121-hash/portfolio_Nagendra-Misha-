@@ -31,3 +31,6 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 scratch/
+
+# scraped / temporary website files
+test111/
