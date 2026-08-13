@@ -77,28 +77,20 @@ export default function Home() {
           </Link>
           <nav role="navigation" className="nav-menu1 w-nav-menu">
             <nav className="nav_links_wrapper1">
-              <Link href="#blog" className="nav_link w-inline-block">
-                <div>Blog</div>
+              <Link href="#" className="nav_link w-inline-block">
+                <div>HOME</div>
               </Link>
-              <div data-hover="true" data-delay="0" className="dropdown1 w-dropdown">
-                <div className="dropdown-toggle1 w-dropdown-toggle">
-                  <div>Shop</div>
-                  <img
-                    src="https://cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/6244ba99e17cc72d0c94ebc7_Navbar arrow.svg"
-                    width="12"
-                    alt=""
-                    className="expand_arrow"
-                  />
-                </div>
-              </div>
-              <Link href="#marietv" className="nav_link w-inline-block">
-                <div>MarieTV</div>
+                <Link href="#" className="nav_link w-inline-block">
+                <div>About</div>
               </Link>
-              <Link href="#podcast" className="nav_link w-inline-block">
+              <Link href="#" className="nav_link w-inline-block">
                 <div>Podcast</div>
               </Link>
-              <Link href="#about" className="nav_link w-inline-block">
-                <div>About</div>
+              <Link href="#" className="nav_link w-inline-block">
+                <div>Books</div>
+              </Link>
+              <Link href="#" className="nav_link w-inline-block">
+                <div>Content</div>
               </Link>
             </nav>
             <a
