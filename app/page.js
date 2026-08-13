@@ -843,7 +843,7 @@ export default function Home() {
                     }}
                   >
                     View All Episodes
-                  </a>0.
+                  </a>
                 </div>
               </div>
             </div>
