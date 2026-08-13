@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ZoomParallax } from '../components/ui/zoom-parallax';
 import LogoCloud from '../components/ui/logo-cloud-15';
 import { InteractiveFolderGallery } from '../components/ui/interactive-folder-gallery';
-import MatrixRain from '../components/ui/matrix-rain';
+import FocusReveal from '../components/ui/focus-reveal';
 import CircularShareButton from '../components/ui/circular-share-button';
 import RevealHoverButton from '../components/ui/reveal-hover-button';
 import SphereImageGrid from '../components/SphereImageGrid';
@@ -363,9 +363,9 @@ export default function Home() {
                   Heya!
                 </div>
 
-                <MatrixRain
-                  text={`I'M\nNAGENDRA MISHRA.`}
-                  tag="h2"
+                <FocusReveal
+                  text="I'M NAGENDRA MISHRA."
+                  as="h2"
                   className="serif_display_heading u-heading"
                   color="#1d1b1c"
                   font={{
@@ -377,16 +377,9 @@ export default function Home() {
                     textAlign: 'left',
                     textTransform: 'uppercase'
                   }}
-                  startY={-80}
-                  startOpacity={0}
+                  blur={20}
                   staggerFrom="start"
-                  transition={{
-                    type: "tween",
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: "easeOut",
-                    staggerChildren: 0.05,
-                  }}
+                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
                 />
 
                 <p>
@@ -466,9 +459,9 @@ export default function Home() {
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
                 <h2 className="eyebrow">BUSINESS & LEADERSHIP</h2>
-                <MatrixRain
+                <FocusReveal
                   text="TURNING VISION INTO REAL BUSINESS GROWTH."
-                  tag="h3"
+                  as="h3"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
                   font={{
@@ -478,16 +471,9 @@ export default function Home() {
                     lineHeight: 1.1,
                     marginBottom: '20px'
                   }}
-                  startY={-80}
-                  startOpacity={0}
+                  blur={20}
                   staggerFrom="start"
-                  transition={{
-                    type: "tween",
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: "easeOut",
-                    staggerChildren: 0.05,
-                  }}
+                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
                 />
                 <p>
                   Nagendra Mishra combines entrepreneurial experience, strategic leadership, and innovation to drive business growth, create opportunities, and build long-term value.
@@ -517,9 +503,9 @@ export default function Home() {
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
                 <h2 className="eyebrow">Watch and learn</h2>
-                <MatrixRain
+                <FocusReveal
                   text="POWERFUL SPEECHES ON BUSINESS GROWTH & LEADERSHIP"
-                  tag="h3"
+                  as="h3"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
                   font={{
@@ -529,16 +515,9 @@ export default function Home() {
                     lineHeight: 1.1,
                     marginBottom: '20px'
                   }}
-                  startY={-80}
-                  startOpacity={0}
+                  blur={20}
                   staggerFrom="start"
-                  transition={{
-                    type: "tween",
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: "easeOut",
-                    staggerChildren: 0.05,
-                  }}
+                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
                 />
                 <p>
                   Watch Nagendra Mishra deliver impactful speeches and keynotes on real-world business strategies, enterprise scaling, and leadership. Drawing from 16+ years of experience across 15+ ventures, his talks deliver actionable insights to help entrepreneurs think bigger and build smarter.
@@ -567,9 +546,9 @@ export default function Home() {
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
                 <h2 className="eyebrow">#1 THE DEFINITIVE GUIDE FOR THE NEXT-GEN ENTREPRENEUR</h2>
-                <MatrixRain
+                <FocusReveal
                   text="HOW TO BUILD MULTIPLE VENTURES WITHOUT BURNOUT"
-                  tag="h3"
+                  as="h3"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
                   font={{
@@ -579,16 +558,9 @@ export default function Home() {
                     lineHeight: 1.1,
                     marginBottom: '20px'
                   }}
-                  startY={-80}
-                  startOpacity={0}
+                  blur={20}
                   staggerFrom="start"
-                  transition={{
-                    type: "tween",
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: "easeOut",
-                    staggerChildren: 0.05,
-                  }}
+                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
                 />
                 <p style={{ fontSize: '1.15rem', lineHeight: 1.6, color: '#333333', marginBottom: '28px' }}>
                   Discover proven systems to manage multiple businesses simultaneously while cutting operational friction. This book empowers you to automate routine workflows and focus exclusively on high-value, strategic growth.
@@ -848,9 +820,9 @@ export default function Home() {
             <div className="w-layout-vflex u-section_vflex_wrap">
               <div className="u-section_header_vflex">
                 <h3 className="eyebrow">Our students Get Results</h3>
-                <MatrixRain
+                <FocusReveal
                   text="Will You Be The Next Success Story?"
-                  tag="h2"
+                  as="h2"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
                   font={{
@@ -861,16 +833,9 @@ export default function Home() {
                     textAlign: 'center',
                     marginBottom: '20px'
                   }}
-                  startY={-80}
-                  startOpacity={0}
-                  staggerFrom="start"
-                  transition={{
-                    type: "tween",
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: "easeOut",
-                    staggerChildren: 0.05,
-                  }}
+                  blur={20}
+                  staggerFrom="center"
+                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
                 />
               </div>
             </div>
