@@ -438,7 +438,7 @@ export default function Home() {
                   }}
                 />
               </div>
- 
+
 
               {/* Circular Share Button Section */}
               <section

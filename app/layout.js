@@ -8,7 +8,8 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const cssPath = path.join(
+  // Try test111 folder first (local dev with scraped files), then fallback to public/css
+  const cssPathTest111 = path.join(
     process.cwd(),
     'test111',
     'cdn.prod.website-files.com',
@@ -16,8 +17,13 @@ export default function RootLayout({ children }) {
     'css',
     'mfi-site-test.shared.1bb282399.min.css'
   );
-  
-  const cssContent = fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf-8') : '';
+  const cssPathPublic = path.join(process.cwd(), 'public', 'css', 'mfi-site.min.css');
+
+  const cssContent = fs.existsSync(cssPathTest111)
+    ? fs.readFileSync(cssPathTest111, 'utf-8')
+    : fs.existsSync(cssPathPublic)
+    ? fs.readFileSync(cssPathPublic, 'utf-8')
+    : '';
 
   return (
     <html lang="en" className="w-mod-js w-mod-ix">

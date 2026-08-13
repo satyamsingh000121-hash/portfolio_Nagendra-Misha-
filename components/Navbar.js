@@ -1,82 +1,67 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Menu, X, Sparkles, ArrowRight } from 'lucide-react';
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 glass" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '80px' }}>
-        {/* Brand Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0F172A', tracking: '-0.03em' }}>
-            MARIE<span style={{ color: '#FF2E63' }}>FORLEO</span>
-          </span>
-          <span style={{ background: '#FF2E63', color: '#fff', fontSize: '0.65rem', fontWeight: '700', padding: '2px 8px', borderRadius: '12px', textTransform: 'uppercase' }}>
-            NEXT.JS
-          </span>
-        </Link>
-
-        {/* Desktop Links */}
-        <nav style={{ display: 'none', gap: '32px', alignItems: 'center' }} className="desktop-nav">
-          <Link href="#about" style={linkStyle}>About</Link>
-          <Link href="#bschool" style={linkStyle}>B-School</Link>
-          <Link href="#programs" style={linkStyle}>Programs</Link>
-          <Link href="#marietv" style={linkStyle}>MarieTV</Link>
-          <Link href="#podcast" style={linkStyle}>Podcast</Link>
-        </nav>
-
-        {/* CTA Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link href="#start" className="btn btn-primary" style={{ padding: '10px 22px', fontSize: '0.9rem' }}>
-            <Sparkles size={16} /> Free Training
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3">
+            <span className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              MARIE<span className="text-pink-500">FORLEO</span>
+            </span>
+            <span className="hidden md:inline-block bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full uppercase">
+              NEXT.JS
+            </span>
           </Link>
-          <button 
-            className="mobile-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#0F172A' }}
-            aria-label="Toggle Navigation"
-          >
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-          </button>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="#about" className="text-slate-600 font-semibold hover:text-slate-900">About</Link>
+            <Link href="#bschool" className="text-slate-600 font-semibold hover:text-slate-900">B-School</Link>
+            <Link href="#programs" className="text-slate-600 font-semibold hover:text-slate-900">Programs</Link>
+            <Link href="#marietv" className="text-slate-600 font-semibold hover:text-slate-900">MarieTV</Link>
+            <Link href="#podcast" className="text-slate-600 font-semibold hover:text-slate-900">Podcast</Link>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-4">
+            <Link href="#start" className="hidden md:inline-flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded-md text-sm font-semibold">
+              <Sparkles size={16} /> Free Training
+            </Link>
+
+            <button
+              className="md:hidden p-2 text-slate-900"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div style={{ background: '#FFFFFF', padding: '20px 24px', borderBottom: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <Link href="#about" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>About</Link>
-          <Link href="#bschool" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>B-School</Link>
-          <Link href="#programs" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>Programs</Link>
-          <Link href="#marietv" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>MarieTV</Link>
-          <Link href="#podcast" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>Podcast</Link>
+        <div className="md:hidden bg-white border-t border-gray-100">
+          <div className="px-4 pt-4 pb-6 flex flex-col gap-4">
+            <Link href="#about" onClick={() => setMobileMenuOpen(false)} className="text-slate-900 font-semibold">About</Link>
+            <Link href="#bschool" onClick={() => setMobileMenuOpen(false)} className="text-slate-900 font-semibold">B-School</Link>
+            <Link href="#programs" onClick={() => setMobileMenuOpen(false)} className="text-slate-900 font-semibold">Programs</Link>
+            <Link href="#marietv" onClick={() => setMobileMenuOpen(false)} className="text-slate-900 font-semibold">MarieTV</Link>
+            <Link href="#podcast" onClick={() => setMobileMenuOpen(false)} className="text-slate-900 font-semibold">Podcast</Link>
+            <Link href="#start" onClick={() => setMobileMenuOpen(false)} className="mt-2 inline-flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded-md text-sm font-semibold">
+              <Sparkles size={14} /> Free Training
+            </Link>
+          </div>
         </div>
       )}
-
-      <style jsx>{`
-        @media (min-width: 768px) {
-          .desktop-nav { display: flex !important; }
-          .mobile-toggle { display: none !important; }
-        }
-      `}</style>
     </header>
   );
 }
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#475569',
-  fontWeight: '600',
-  fontSize: '0.95rem',
-  transition: 'color 0.2s',
-};
-
-const mobileLinkStyle = {
-  textDecoration: 'none',
-  color: '#0F172A',
-  fontWeight: '600',
-  fontSize: '1.1rem',
-};

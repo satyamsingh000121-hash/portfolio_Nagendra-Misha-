@@ -13,10 +13,10 @@ export default function DefaultDemo() {
 		if (typeof window !== 'undefined') {
 			lenis = new Lenis();
 
-			function raf(time: number) {
+			const raf = (time: number) => {
 				lenis?.raf(time);
 				rafId = requestAnimationFrame(raf);
-			}
+			};
 
 			rafId = requestAnimationFrame(raf);
 		}

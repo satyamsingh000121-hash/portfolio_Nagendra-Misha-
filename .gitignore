@@ -34,3 +34,5 @@ scratch/
 
 # scraped / temporary website files
 test111/
+
+.vercel
