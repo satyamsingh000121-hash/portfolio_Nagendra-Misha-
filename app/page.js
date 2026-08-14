@@ -9,6 +9,8 @@ import FocusReveal from '../components/ui/focus-reveal';
 import CircularShareButton from '../components/ui/circular-share-button';
 import RevealHoverButton from '../components/ui/reveal-hover-button';
 import SphereImageGrid from '../components/SphereImageGrid';
+import { NavLinkHover } from '../components/ui/menu-hover-effects';
+import '../components/ui/menu-hover-effects.css';
 
 const parallaxImages = [
   {
@@ -76,22 +78,12 @@ export default function Home() {
             />
           </Link>
           <nav role="navigation" className="nav-menu1 w-nav-menu">
-            <nav className="nav_links_wrapper1">
-              <Link href="#" className="nav_link w-inline-block">
-                <div>HOME</div>
-              </Link>
-                <Link href="#" className="nav_link w-inline-block">
-                <div>About</div>
-              </Link>
-              <Link href="#" className="nav_link w-inline-block">
-                <div>Podcast</div>
-              </Link>
-              <Link href="#" className="nav_link w-inline-block">
-                <div>Books</div>
-              </Link>
-              <Link href="#" className="nav_link w-inline-block">
-                <div>Content</div>
-              </Link>
+            <nav className="nav_links_wrapper1" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <NavLinkHover href="#">HOME</NavLinkHover>
+              <NavLinkHover href="#hey">About</NavLinkHover>
+              <NavLinkHover href="#podcast">Podcast</NavLinkHover>
+              <NavLinkHover href="#">Books</NavLinkHover>
+              <NavLinkHover href="#">Content</NavLinkHover>
             </nav>
             <a
               href="https://www.jointimegenius.com/freetraining"

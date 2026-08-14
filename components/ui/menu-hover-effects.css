@@ -1,0 +1,188 @@
+/* ==========================================================================
+   NavLinkHover – Animated border + fill hover effect
+   ========================================================================== */
+
+.nav-link-hover {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Link text */
+.nav-link-hover__text {
+  position: relative;
+  z-index: 2;
+  display: block;
+  text-transform: uppercase;
+  color: #262626;
+  font-family: inherit;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 1024px) {
+  .nav-link-hover__text {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Top & bottom borders – scale from center */
+.nav-link-hover__borders {
+  position: absolute;
+  inset: 0;
+  border-top: 2px solid #262626;
+  border-bottom: 2px solid #262626;
+  transform: scaleY(2);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* Background fill – scales from top */
+.nav-link-hover__fill {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 2px);
+  background: #262626;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: top;
+  pointer-events: none;
+}
+
+/* Hover state */
+.nav-link-hover:hover .nav-link-hover__text {
+  color: #ffffff;
+}
+
+.nav-link-hover:hover .nav-link-hover__borders {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.nav-link-hover:hover .nav-link-hover__fill {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   NavMenu (standalone full-screen menu component)
+   ========================================================================== */
+
+.nav-menu-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: #fafafa;
+}
+
+/* Hamburger toggle – visible only on mobile */
+.nav-menu-toggle {
+  display: none;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 20;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .nav-menu-toggle {
+    display: block;
+  }
+}
+
+.nav-menu-toggle__bar {
+  width: 24px;
+  height: 2px;
+  color: #262626;
+  background: #262626;
+  margin-bottom: 6px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-menu-toggle__bar:last-child {
+  margin-bottom: 0;
+}
+
+.nav-menu-toggle__bar--open-1 {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.nav-menu-toggle__bar--open-2 {
+  opacity: 0;
+}
+
+.nav-menu-toggle__bar--open-3 {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* Items wrapper */
+.nav-menu-items {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-menu-items--open {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .nav-menu-items {
+    display: block;
+    height: auto;
+    padding-top: 32px;
+  }
+}
+
+/* List */
+.nav-menu-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-menu-list {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-menu-list {
+    gap: 32px;
+  }
+}
+
+.nav-menu-list__item {
+  list-style: none;
+}
+
+/* Mobile: larger text */
+@media (max-width: 767px) {
+  .nav-menu-list .nav-link-hover__text {
+    font-size: 1.25rem;
+    padding: 8px 12px;
+  }
+}
