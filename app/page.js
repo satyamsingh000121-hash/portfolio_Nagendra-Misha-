@@ -72,7 +72,8 @@ export default function Home() {
           <Link href="/" className="nav_logo_link w-nav-brand w--current">
             <img
               width="245"
-              src="/api/asset?path=cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/66df74bad0fcd954123e9818_MarieForleo_Logo.png"
+              style={{ height: "70px" }}
+              src="/images/1-Photoroom.png"
               alt="logo"
               className="nav_logo_image"
             />
@@ -811,9 +812,9 @@ export default function Home() {
           <div className="w-layout-blockcontainer success_stories_contain u-container w-container">
             <div className="w-layout-vflex u-section_vflex_wrap">
               <div className="u-section_header_vflex">
-                <h3 className="eyebrow">Our students Get Results</h3>
+                <h3 className="eyebrow">THE MIND BEHIND GROWTH EXPO</h3>
                 <FocusReveal
-                  text="Will You Be The Next Success Story?"
+                  text="MEET NAGENDRA MISHRA CEO, GROWTH EXPO"
                   as="h2"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
@@ -839,12 +840,19 @@ export default function Home() {
                       <div role="list" className="success-stories-slide w-dyn-items">
                         <div role="listitem" className="success-stories-slide w-dyn-item">
                           <div className="in-page-slider-caption-right-side u-vflex">
-                            <a href="#bschool" className="product-tag">B-School</a>
-                            <p>The EXACT messages I needed to hear to kick me in the bum, get me started and, most importantly, to BELIEVE in myself.</p>
-                            <div className="secondary_paragraph">Bonnie U.</div>
+                            <a href="#bschool" className="product-tag">Business Coach. Entrepreneur. Event Leader.</a>
+
+                            <p>
+
+                              Nagendra Mishra is the CEO of Growth Expo, a platform dedicated to bringing ambitious business owners, entrepreneurs, and industry leaders together.
+                              Through business expos, networking events, workshops, and keynote sessions, he creates meaningful opportunities for people to connect, collaborate, and grow.
+                              His mission is simple:
+
+                              Create the right environment where conversations turn into meaningful connections, and connections turn into business opportunities.</p>
+
                             <a href="#success-stories" className="u-button w-inline-block">
                               <div className="u-button-content">
-                                <div>Get Inspired</div>
+                                <div>Discover His Journey</div>
                               </div>
                             </a>
                           </div>
