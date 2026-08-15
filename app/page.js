@@ -11,6 +11,7 @@ import RevealHoverButton from '../components/ui/reveal-hover-button';
 import SphereImageGrid from '../components/SphereImageGrid';
 import { NavLinkHover } from '../components/ui/menu-hover-effects';
 import '../components/ui/menu-hover-effects.css';
+import Features02 from '../components/originkit/features-02';
 
 const parallaxImages = [
   {
@@ -41,15 +42,12 @@ const parallaxImages = [
     src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
     alt: 'Ocean view',
   },
-  {
-    src: '/images/ChatGPT Image Aug 8, 2026, 10_11_43 AM.png',
-    alt: 'Forest trees',
-  },
 ];
 
 
 export default function Home() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="page_wrap">
@@ -67,34 +65,94 @@ export default function Home() {
       </div>
 
       {/* Navigation Banner */}
-      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" className="nav_section w-nav">
-        <nav className="nav_container">
-          <Link href="/" className="nav_logo_link w-nav-brand w--current">
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" className="nav_section w-nav" style={{ position: 'sticky', top: 0, zIndex: 1000, background: '#ffffff' }}>
+        <nav className="nav_container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="#home" className="nav_logo_link w-nav-brand w--current" style={{ display: 'flex', alignItems: 'center', padding: '4px 0' }}>
             <img
-              width="245"
-              style={{ height: "70px" }}
               src="/images/1-Photoroom.png"
               alt="logo"
               className="nav_logo_image"
+              style={{
+                height: "65px",
+                width: "auto",
+                maxWidth: "250px",
+                transform: "scale(1.6)",
+                transformOrigin: "left center",
+                marginLeft: "10px"
+              }}
             />
           </Link>
+
+          {/* Desktop Nav Links */}
           <nav role="navigation" className="nav-menu1 w-nav-menu">
             <nav className="nav_links_wrapper1" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <NavLinkHover href="#">HOME</NavLinkHover>
-              <NavLinkHover href="#hey">About</NavLinkHover>
+              <NavLinkHover href="#home">HOME</NavLinkHover>
+              <NavLinkHover href="#about">About</NavLinkHover>
               <NavLinkHover href="#podcast">Podcast</NavLinkHover>
-              <NavLinkHover href="#">Books</NavLinkHover>
-              <NavLinkHover href="#">Content</NavLinkHover>
+              <NavLinkHover href="#books">Books</NavLinkHover>
+              <NavLinkHover href="#content">Content</NavLinkHover>
             </nav>
             <a
-              href="https://www.jointimegenius.com/freetraining"
-              target="_blank"
-              rel="noreferrer"
+              href="#free-training"
               className="primary-button lime button-drop-shadow w-button"
             >
               Free Training
             </a>
           </nav>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-nav-toggle"
+            aria-label="Toggle navigation menu"
+          >
+            <div style={{
+              width: '26px',
+              height: '3px',
+              backgroundColor: '#1D1B1C',
+              margin: '3px 0',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              transform: mobileMenuOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'
+            }} />
+            <div style={{
+              width: '26px',
+              height: '3px',
+              backgroundColor: '#1D1B1C',
+              margin: '3px 0',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              opacity: mobileMenuOpen ? 0 : 1
+            }} />
+            <div style={{
+              width: '26px',
+              height: '3px',
+              backgroundColor: '#1D1B1C',
+              margin: '3px 0',
+              borderRadius: '2px',
+              transition: 'all 0.3s ease',
+              transform: mobileMenuOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'
+            }} />
+          </button>
+
+          {/* Mobile Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className="mobile-drawer-menu">
+              <a href="#home" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">Home</a>
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">About</a>
+              <a href="#podcast" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">Podcast</a>
+              <a href="#books" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">Books</a>
+              <a href="#content" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">Content</a>
+              <a
+                href="#free-training"
+                onClick={() => setMobileMenuOpen(false)}
+                className="primary-button lime button-drop-shadow w-button"
+                style={{ textAlign: 'center', marginTop: '8px', display: 'block' }}
+              >
+                Free Training
+              </a>
+            </div>
+          )}
         </nav>
       </div>
 
@@ -102,9 +160,9 @@ export default function Home() {
       <main id="main" className="page_main">
 
         {/* Hero Section */}
-        <section className="video-background-section">
+        <section id="home" className="video-background-section">
           <div className="hero-down-arrow-push-center">
-            <a href="#hey" className="arrow-link w-inline-block">
+            <a href="#about" className="arrow-link w-inline-block">
               <img
                 src="https://cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/61608eb1f0949b57728706e4_Arrow(White).svg"
                 loading="lazy"
@@ -222,7 +280,7 @@ export default function Home() {
         )}
 
         {/* Free Audio Training Banner */}
-        <section className="home_htgayw_wrap u-section" style={{ padding: '65px 0', background: '#F8F1E9' }}>
+        <section id="free-training" className="home_htgayw_wrap u-section" style={{ padding: '65px 0', background: '#F8F1E9' }}>
           <div className="htgayw_push_contain u-container w-container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="scroll-reveal w-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '30px' }}>
 
@@ -236,7 +294,7 @@ export default function Home() {
 
                 {/* Expanded Width Input Form */}
                 <form onSubmit={(e) => e.preventDefault()} style={{ maxWidth: '780px', margin: '0 auto' }}>
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                  <div className="training-input-group" style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
                     <input
                       type="text"
                       placeholder="First Name"
@@ -309,7 +367,7 @@ export default function Home() {
 
         {/* Heya! I'm Marie Section */}
         <section
-          id="hey"
+          id="about"
           className="home_marie_wrap"
           style={{
             background: '#EAE0D5',
@@ -320,6 +378,7 @@ export default function Home() {
             position: 'relative'
           }}
         >
+          <span id="hey" style={{ position: 'absolute', top: 0, left: 0 }} />
           <div
             className="hey_marie_contain w-container"
             style={{
@@ -376,12 +435,8 @@ export default function Home() {
                 />
 
                 <p>
-
-
                   Nagendra Mishra is a serial entrepreneur, visionary leader, and business strategist with over 16 years of experience building and scaling successful ventures.
-
                   Since 2011, he has transformed ideas into impactful businesses, driven by innovation, leadership, and sustainable growth.
-
                 </p>
 
 
@@ -491,7 +546,8 @@ export default function Home() {
         </section>
 
         {/* MarieTV Section */}
-        <section className="home_marietv_wrap u-section">
+        <section id="content" className="home_marietv_wrap u-section" style={{ position: 'relative' }}>
+          <span id="marietv" style={{ position: 'absolute', top: 0, left: 0 }} />
           <div className="w-layout-blockcontainer content_container_fill u-container w-container">
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
@@ -515,7 +571,7 @@ export default function Home() {
                 <p>
                   Watch Nagendra Mishra deliver impactful speeches and keynotes on real-world business strategies, enterprise scaling, and leadership. Drawing from 16+ years of experience across 15+ ventures, his talks deliver actionable insights to help entrepreneurs think bigger and build smarter.
                 </p>
-                <a href="#marietv" className="u-button w-inline-block">
+                <a href="#content" className="u-button w-inline-block">
                   <div className="u-button-content">
                     <div>Watch Now</div>
                   </div>
@@ -534,7 +590,7 @@ export default function Home() {
         </section>
 
         {/* Everything is Figureoutable Section */}
-        <section className="home_eif_wrap u-section">
+        <section id="books" className="home_eif_wrap u-section">
           <div className="w-layout-blockcontainer content_container_fill u-container w-container">
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
@@ -578,37 +634,72 @@ export default function Home() {
         </section>
 
         {/* The Marie Forleo Podcast Overview Section */}
-        <section className="home_podcast_wrap u-section">
-          <section className="video-background-section podcast">
-            <div className="video-bg-section-mobile">
-              <div className="video-wrap">
-                <div className="mobile-video-hero-background-copy podcast-video w-embed w-iframe">
-                  <iframe
-                    loading="lazy"
-                    src="https://player.vimeo.com/video/846761232?autoplay=1&api=1&background=1&mute=0"
-                    width="100%"
-                    height="100%"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
+        <section id="podcast" className="home_podcast_wrap u-section" style={{ paddingBottom: '0px' }}>
+          <section className="video-background-section podcast" style={{
+            position: 'relative',
+            width: '100%',
+            height: '650px',
+            minHeight: '650px',
+            overflow: 'hidden',
+            backgroundColor: '#141414',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 1,
+              overflow: 'hidden'
+            }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  filter: 'brightness(0.6)'
+                }}
+              >
+                <source src="/video/gabrielveres.mp4" type="video/mp4" />
+              </video>
             </div>
-            <div className="desktop-video-hero-background podcast-video w-embed w-iframe">
-              <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-                <iframe
-                  src="https://player.vimeo.com/video/846761232?autoplay=1&api=1&background=1&mute=0"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen"
-                  loading="lazy"
-                  allowFullScreen
-                />
-              </div>
+            <div style={{
+              position: 'relative',
+              zIndex: 2,
+              textAlign: 'center',
+              padding: '0 20px',
+              marginBottom: '50px'
+            }}>
+              <span style={{
+                color: '#E4F58E',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                fontSize: '0.95rem',
+                fontWeight: 700
+              }}>
+                Listen &amp; Learn Anywhere
+              </span>
+              <h2 style={{
+                fontFamily: 'ivypresto-display, "Cormorant Garamond", "Bodoni Moda", serif',
+                fontSize: 'clamp(2.6rem, 5.5vw, 4.4rem)',
+                fontWeight: 200,
+                color: '#ffffff',
+                lineHeight: 1.1,
+                marginTop: '6px'
+              }}>
+                The Podcast
+              </h2>
             </div>
           </section>
-          <section className="home_podcast-overview_wrap">
+          <section className="home_podcast-overview_wrap" style={{ position: 'relative', zIndex: 10, marginTop: '-70px' }}>
             <div className="w-layout-blockcontainer page-container podcast-feed w-container">
               <div id="w-node-a5792832-9f80-f114-2a8b-7517d08be5b5-891644b8" className="w-layout-layout podcast-home-columns wf-layout-layout">
                 <div id="w-node-a5792832-9f80-f114-2a8b-7517d08be5b6-891644b8" className="w-layout-cell phone-on-mobile">
@@ -637,7 +728,7 @@ export default function Home() {
                       </div>
                       <div id="w-node-a5792832-9f80-f114-2a8b-7517d08be5c7-891644b8" className="w-layout-cell">
                         <a href="https://podcasts.apple.com/us/podcast/the-marie-forleo-podcast/id1199977889" target="_blank" rel="noreferrer" className="podcast_grid_link w-inline-block">
-                          <img src="/api/asset?path=cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/64b97a1ca582ee03cf1c9298_applepodcasts-badge%202.png" loading="lazy" width="250" alt="Apple Podcasts" />
+                          <img src="https://cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/64b97a1ca582ee03cf1c9298_applepodcasts-badge%202.png" loading="lazy" width="250" alt="Apple Podcasts" />
                         </a>
                       </div>
                       <div id="w-node-a5792832-9f80-f114-2a8b-7517d08be5ca-891644b8" className="w-layout-cell">
@@ -657,7 +748,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <img src="/api/asset?path=cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/64ee5f6e8275d03e3254766f_Airpods.png" loading="lazy" width="164" alt="Airpods" className="airpods_image" />
+                  <img src="https://cdn.prod.website-files.com/5f2ae813361eff3ad9282b29/64ee5f6e8275d03e3254766f_Airpods.png" loading="lazy" width="164" alt="Airpods" className="airpods_image" />
                 </div>
               </div>
             </div>
@@ -807,67 +898,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Success Stories Section */}
-        <section className="home_success-stories_wrap u-section">
-          <div className="w-layout-blockcontainer success_stories_contain u-container w-container">
-            <div className="w-layout-vflex u-section_vflex_wrap">
-              <div className="u-section_header_vflex">
-                <h3 className="eyebrow">THE MIND BEHIND GROWTH EXPO</h3>
-                <FocusReveal
-                  text="MEET NAGENDRA MISHRA CEO, GROWTH EXPO"
-                  as="h2"
-                  className="serif_display_heading section_heading u-heading"
-                  color="#1d1b1c"
-                  font={{
-                    fontFamily: 'ivypresto-display, "Cormorant Garamond", "Bodoni Moda", Didot, serif',
-                    fontWeight: 200,
-                    fontSize: '2.8rem',
-                    lineHeight: 1.15,
-                    textAlign: 'center',
-                    marginBottom: '20px'
-                  }}
-                  blur={20}
-                  staggerFrom="center"
-                  transition={{ type: 'tween', ease: 'easeOut', duration: 0.8, staggerChildren: 0.06, delay: 0 }}
-                />
-              </div>
-            </div>
-            <div className="slider-container w-container">
-              <div className="in-page-slider w-slider">
-                <div className="w-slider-mask">
-                  <div className="slide w-slide">
-                    <div className="success-stories-slide w-dyn-list">
-                      <div role="list" className="success-stories-slide w-dyn-items">
-                        <div role="listitem" className="success-stories-slide w-dyn-item">
-                          <div className="in-page-slider-caption-right-side u-vflex">
-                            <a href="#bschool" className="product-tag">Business Coach. Entrepreneur. Event Leader.</a>
-
-                            <p>
-
-                              Nagendra Mishra is the CEO of Growth Expo, a platform dedicated to bringing ambitious business owners, entrepreneurs, and industry leaders together.
-                              Through business expos, networking events, workshops, and keynote sessions, he creates meaningful opportunities for people to connect, collaborate, and grow.
-                              His mission is simple:
-
-                              Create the right environment where conversations turn into meaningful connections, and connections turn into business opportunities.</p>
-
-                            <a href="#success-stories" className="u-button w-inline-block">
-                              <div className="u-button-content">
-                                <div>Discover His Journey</div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Originkit Features 02 Section */}
+        <Features02 />
 
         {/* Zoom Parallax Section */}
-        <section className="relative w-full bg-black text-white">
+        <section id="journey" className="relative w-full bg-black text-white">
           <div className="relative py-16 text-center z-10 bg-gradient-to-b from-[#191919] via-black to-black">
             <h2 className="text-3xl font-bold tracking-tight md:text-5xl" style={{ fontFamily: 'ivypresto-display, "Cormorant Garamond", serif', fontWeight: 300 }}>
               Experience the Journey

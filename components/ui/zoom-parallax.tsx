@@ -3,18 +3,18 @@
 import { useScroll, useTransform, motion } from 'framer-motion';
 import { useRef } from 'react';
 
-interface Image {
+interface ImageItem {
 	src: string;
 	alt?: string;
 }
 
 interface ZoomParallaxProps {
 	/** Array of images to be displayed in the parallax effect max 7 images */
-	images: Image[];
+	images: ImageItem[];
 }
 
 export function ZoomParallax({ images }: ZoomParallaxProps) {
-	const container = useRef(null);
+	const container = useRef<HTMLDivElement>(null);
 	const { scrollYProgress } = useScroll({
 		target: container,
 		offset: ['start start', 'end end'],
@@ -26,24 +26,75 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 	const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
 	const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
 
-	const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
+	const pictures = [
+		{
+			src: images[0]?.src || '/placeholder.svg',
+			alt: images[0]?.alt || 'Center Parallax image',
+			scale: scale4,
+			style: { width: '25vw', height: '25vh', position: 'relative' as const },
+			zIndex: 30, // Center image stays in front (aage aana chahiye)
+		},
+		{
+			src: images[1]?.src || '/placeholder.svg',
+			alt: images[1]?.alt || 'Parallax image 2',
+			scale: scale5,
+			style: { width: '35vw', height: '30vh', top: '-30vh', left: '5vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+		{
+			src: images[2]?.src || '/placeholder.svg',
+			alt: images[2]?.alt || 'Parallax image 3',
+			scale: scale6,
+			style: { width: '20vw', height: '45vh', top: '-10vh', left: '-25vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+		{
+			src: images[3]?.src || '/placeholder.svg',
+			alt: images[3]?.alt || 'Parallax image 4',
+			scale: scale5,
+			style: { width: '25vw', height: '25vh', top: '0', left: '27.5vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+		{
+			src: images[4]?.src || '/placeholder.svg',
+			alt: images[4]?.alt || 'Parallax image 5',
+			scale: scale6,
+			style: { width: '20vw', height: '25vh', top: '27.5vh', left: '5vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+		{
+			src: images[5]?.src || '/placeholder.svg',
+			alt: images[5]?.alt || 'Parallax image 6',
+			scale: scale8,
+			style: { width: '30vw', height: '25vh', top: '27.5vh', left: '-22.5vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+		{
+			src: images[6]?.src || '/placeholder.svg',
+			alt: images[6]?.alt || 'Parallax image 7',
+			scale: scale9,
+			style: { width: '15vw', height: '15vh', top: '22.5vh', left: '25vw', position: 'relative' as const },
+			zIndex: 10,
+		},
+	];
 
 	return (
 		<div ref={container} className="relative h-[300vh]">
 			<div className="sticky top-0 h-screen overflow-hidden">
-				{images.map(({ src, alt }, index) => {
-					const scale = scales[index % scales.length];
-
+				{pictures.map(({ src, alt, scale, style, zIndex }, index) => {
 					return (
 						<motion.div
 							key={index}
-							style={{ scale }}
-							className={`absolute top-0 flex h-full w-full items-center justify-center ${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} ${index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} ${index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} ${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} ${index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} `}
+							style={{ scale, zIndex }}
+							className="absolute top-0 left-0 flex h-full w-full items-center justify-center pointer-events-none"
 						>
-							<div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-2xl border border-white/15 bg-neutral-900 shadow-2xl transition-all duration-300">
+							<div
+								style={style}
+								className="overflow-hidden rounded-2xl border border-white/20 bg-neutral-900 shadow-2xl pointer-events-auto"
+							>
 								<img
-									src={src || '/placeholder.svg'}
-									alt={alt || `Parallax image ${index + 1}`}
+									src={src}
+									alt={alt}
 									className="h-full w-full object-cover"
 								/>
 							</div>

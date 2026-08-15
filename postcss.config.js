@@ -1,6 +1,6 @@
+/** Originkit — Tailwind v4 configuration */
 module.exports = {
   plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
+    "@tailwindcss/postcss": {},
   },
 };

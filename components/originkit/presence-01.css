@@ -1,0 +1,16 @@
+/* presence-01 — globe orbit */
+
+@keyframes globe-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-globe-orbit {
+  animation: globe-orbit 14s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes globe-orbit {
+    from, to { transform: none; }
+  }
+}
