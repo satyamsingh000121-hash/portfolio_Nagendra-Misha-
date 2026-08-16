@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   User,
@@ -11,7 +11,9 @@ import {
   Settings,
   LogOut,
   X,
-  Sparkles
+  Sparkles,
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -49,6 +51,20 @@ const navItems = [
 
 export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleConfirmLogout = () => {
+    setIsLoggingOut(true);
+    setTimeout(() => {
+      setIsLoggingOut(false);
+      setIsLogoutModalOpen(false);
+      if (onClose) onClose();
+      router.push('/admin/login');
+    }, 600);
+  };
 
   return (
     <>
@@ -155,15 +171,72 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
             type="button"
             className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 cursor-pointer text-left"
             style={{ color: 'var(--muted-foreground)' }}
-            onClick={() => {
-              // Visual logout button only (no backend/auth implemented)
-            }}
+            onClick={() => setIsLogoutModalOpen(true)}
           >
             <LogOut className="w-4 h-4 flex-shrink-0" />
             <span>Logout</span>
           </button>
         </div>
       </aside>
+
+      {/* Logout Confirmation Dialog Modal */}
+      {isLogoutModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setIsLogoutModalOpen(false)}
+        >
+          <div
+            className="relative max-w-sm w-full rounded-2xl border p-6 shadow-2xl text-center animate-in zoom-in-95 duration-200"
+            style={{
+              backgroundColor: 'var(--card)',
+              borderColor: 'var(--border)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mx-auto mb-4 font-bold">
+              <LogOut className="w-6 h-6" />
+            </div>
+
+            <h3 className="font-bold text-base mb-1" style={{ color: 'var(--foreground)' }}>
+              Logout
+            </h3>
+            <p className="text-xs text-muted-foreground mb-6" style={{ color: 'var(--muted-foreground)' }}>
+              Are you sure you want to logout? You will be redirected to the admin login.
+            </p>
+
+            <div className="flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setIsLogoutModalOpen(false)}
+                disabled={isLoggingOut}
+                className="px-4 py-2 rounded-xl border text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer flex-1"
+                style={{
+                  backgroundColor: 'var(--muted)',
+                  borderColor: 'var(--border)',
+                  color: 'var(--foreground)',
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmLogout}
+                disabled={isLoggingOut}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-all cursor-pointer flex-1 shadow-sm flex items-center justify-center gap-1.5"
+              >
+                {isLoggingOut ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Logging out...</span>
+                  </>
+                ) : (
+                  <span>Logout</span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
