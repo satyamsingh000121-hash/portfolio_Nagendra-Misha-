@@ -185,7 +185,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
           if (localRes.ok) {
             data = await localRes.json();
           }
-        } catch {}
+        } catch { }
 
         if (!data) {
           const response = await fetch(

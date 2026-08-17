@@ -1,8 +1,18 @@
 'use client';
 
-import { BookOpen, Zap, Award, ArrowUpRight, Sparkles } from 'lucide-react';
+import React from 'react';
+import { BookOpen, Zap, Award, ArrowUpRight, LucideIcon } from 'lucide-react';
 
-const programsList = [
+export interface ProgramItem {
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: LucideIcon;
+  badge: string;
+  color: string;
+}
+
+const programsList: ProgramItem[] = [
   {
     title: 'B-School',
     subtitle: 'Business Foundation',
@@ -29,7 +39,7 @@ const programsList = [
   }
 ];
 
-export default function Programs() {
+export default function Programs(): React.ReactElement {
   return (
     <section id="programs" style={{ padding: '80px 0', background: '#FFFFFF' }}>
       <div className="container">
@@ -47,7 +57,7 @@ export default function Programs() {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-          {programsList.map((prog, idx) => {
+          {programsList.map((prog: ProgramItem, idx: number) => {
             const IconComponent = prog.icon;
             return (
               <div 

@@ -2,6 +2,16 @@
 
 import React from 'react';
 
+export interface HeroProps {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  description?: string;
+  imageUrl?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
 export default function Hero({
   eyebrow = "HEYA!",
   titleLine1 = "I'M",
@@ -10,7 +20,7 @@ export default function Hero({
   imageUrl = "/images/Gemini_Generated_Image_3p38tr3p38tr3p38-Photoroom.png",
   ctaText = "Learn More",
   ctaLink = "#about"
-}) {
+}: HeroProps): React.ReactElement {
   return (
     <>
       {/* Import Google Serif Font */}
@@ -109,11 +119,11 @@ export default function Hero({
                   letterSpacing: '0.05em',
                   transition: 'transform 0.2s ease, background-color 0.2s ease'
                 }}
-                onMouseOver={(e) => {
+                onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.currentTarget.style.backgroundColor = '#8C4A38';
                   e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
-                onMouseOut={(e) => {
+                onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.currentTarget.style.backgroundColor = '#1C1A1A';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
@@ -142,7 +152,7 @@ export default function Hero({
                   objectFit: 'contain',
                   filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.08))'
                 }}
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                   // Fallback in case local image path isn't present
                   e.currentTarget.style.display = 'none';
                 }}
@@ -154,4 +164,3 @@ export default function Hero({
     </>
   );
 }
-

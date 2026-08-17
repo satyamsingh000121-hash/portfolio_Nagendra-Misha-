@@ -7,24 +7,67 @@ import { X } from 'lucide-react';
  * SphereImageGrid - Interactive 3D Image Sphere Component
  */
 
-const SPHERE_MATH = {
-  degreesToRadians: (degrees) => degrees * (Math.PI / 180),
-  radiansToDegrees: (radians) => radians * (180 / Math.PI),
+export interface SphereImage {
+  id?: string;
+  src: string;
+  alt?: string;
+  title?: string;
+  description?: string;
+}
 
-  sphericalToCartesian: (radius, theta, phi) => ({
+export interface SphereImageGridProps {
+  images?: SphereImage[];
+  containerSize?: number;
+  sphereRadius?: number;
+  dragSensitivity?: number;
+  momentumDecay?: number;
+  maxRotationSpeed?: number;
+  baseImageScale?: number;
+  hoverScale?: number;
+  perspective?: number;
+  autoRotate?: boolean;
+  autoRotateSpeed?: number;
+  className?: string;
+}
+
+interface Point3D {
+  x: number;
+  y: number;
+  z: number;
+}
+
+interface SpherePosition {
+  theta: number;
+  phi: number;
+  radius: number;
+}
+
+interface WorldPosition extends Point3D {
+  scale: number;
+  zIndex: number;
+  isVisible: boolean;
+  fadeOpacity: number;
+  originalIndex: number;
+}
+
+const SPHERE_MATH = {
+  degreesToRadians: (degrees: number): number => degrees * (Math.PI / 180),
+  radiansToDegrees: (radians: number): number => radians * (180 / Math.PI),
+
+  sphericalToCartesian: (radius: number, theta: number, phi: number): Point3D => ({
     x: radius * Math.sin(phi) * Math.cos(theta),
     y: radius * Math.cos(phi),
     z: radius * Math.sin(phi) * Math.sin(theta)
   }),
 
-  calculateDistance: (pos, center = { x: 0, y: 0, z: 0 }) => {
+  calculateDistance: (pos: Point3D, center: Point3D = { x: 0, y: 0, z: 0 }): number => {
     const dx = pos.x - center.x;
     const dy = pos.y - center.y;
     const dz = pos.z - center.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
 
-  normalizeAngle: (angle) => {
+  normalizeAngle: (angle: number): number => {
     let normalized = angle;
     while (normalized > 180) normalized -= 360;
     while (normalized < -180) normalized += 360;
@@ -32,7 +75,7 @@ const SPHERE_MATH = {
   }
 };
 
-const BASE_IMAGES = [
+const BASE_IMAGES: SphereImage[] = [
   {
     src: "https://images.unsplash.com/photo-1758178309498-036c3d7d73b3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=987",
     alt: "Image 1",
@@ -108,7 +151,7 @@ const BASE_IMAGES = [
 ];
 
 // Generate 60 default images
-const DEFAULT_IMAGES = [];
+const DEFAULT_IMAGES: SphereImage[] = [];
 for (let i = 0; i < 60; i++) {
   const baseIndex = i % BASE_IMAGES.length;
   const baseImage = BASE_IMAGES[baseIndex];
@@ -132,24 +175,24 @@ export default function SphereImageGrid({
   autoRotate = true,
   autoRotateSpeed = 0.3,
   className = ''
-}) {
-  const [isMounted, setIsMounted] = useState(false);
-  const [rotation, setRotation] = useState({ x: 15, y: 15, z: 0 });
-  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePositions, setImagePositions] = useState([]);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+}: SphereImageGridProps): React.ReactElement {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [rotation, setRotation] = useState<Point3D>({ x: 15, y: 15, z: 0 });
+  const [velocity, setVelocity] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<SphereImage | null>(null);
+  const [imagePositions, setImagePositions] = useState<SpherePosition[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const containerRef = useRef(null);
-  const lastMousePos = useRef({ x: 0, y: 0 });
-  const animationFrame = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const lastMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const animationFrame = useRef<number | null>(null);
 
   const actualSphereRadius = sphereRadius || containerSize * 0.45;
   const baseImageSize = containerSize * baseImageScale;
 
-  const generateSpherePositions = useCallback(() => {
-    const positions = [];
+  const generateSpherePositions = useCallback((): SpherePosition[] => {
+    const positions: SpherePosition[] = [];
     const imageCount = images.length || 1;
 
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
@@ -186,8 +229,8 @@ export default function SphereImageGrid({
     return positions;
   }, [images.length, actualSphereRadius]);
 
-  const calculateWorldPositions = useCallback(() => {
-    const positions = imagePositions.map((pos, index) => {
+  const calculateWorldPositions = useCallback((): WorldPosition[] => {
+    const positions: WorldPosition[] = imagePositions.map((pos, index) => {
       const thetaRad = SPHERE_MATH.degreesToRadians(pos.theta);
       const phiRad = SPHERE_MATH.degreesToRadians(pos.phi);
       const rotXRad = SPHERE_MATH.degreesToRadians(rotation.x);
@@ -277,11 +320,11 @@ export default function SphereImageGrid({
     return adjustedPositions;
   }, [imagePositions, rotation, actualSphereRadius, baseImageSize]);
 
-  const clampRotationSpeed = useCallback((speed) => {
+  const clampRotationSpeed = useCallback((speed: number): number => {
     return Math.max(-maxRotationSpeed, Math.min(maxRotationSpeed, speed));
   }, [maxRotationSpeed]);
 
-  const updateMomentum = useCallback(() => {
+  const updateMomentum = useCallback((): void => {
     if (isDragging) return;
 
     setVelocity(prev => {
@@ -314,14 +357,14 @@ export default function SphereImageGrid({
     });
   }, [isDragging, momentumDecay, velocity, clampRotationSpeed, autoRotate, autoRotateSpeed]);
 
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>): void => {
     e.preventDefault();
     setIsDragging(true);
     setVelocity({ x: 0, y: 0 });
     lastMousePos.current = { x: e.clientX, y: e.clientY };
   }, []);
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: MouseEvent): void => {
     if (!isDragging) return;
 
     const deltaX = e.clientX - lastMousePos.current.x;
@@ -346,18 +389,18 @@ export default function SphereImageGrid({
     lastMousePos.current = { x: e.clientX, y: e.clientY };
   }, [isDragging, dragSensitivity, clampRotationSpeed]);
 
-  const handleMouseUp = useCallback(() => {
+  const handleMouseUp = useCallback((): void => {
     setIsDragging(false);
   }, []);
 
-  const handleTouchStart = useCallback((e) => {
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>): void => {
     const touch = e.touches[0];
     setIsDragging(true);
     setVelocity({ x: 0, y: 0 });
     lastMousePos.current = { x: touch.clientX, y: touch.clientY };
   }, []);
 
-  const handleTouchMove = useCallback((e) => {
+  const handleTouchMove = useCallback((e: TouchEvent): void => {
     if (!isDragging) return;
 
     const touch = e.touches[0];
@@ -383,7 +426,7 @@ export default function SphereImageGrid({
     lastMousePos.current = { x: touch.clientX, y: touch.clientY };
   }, [isDragging, dragSensitivity, clampRotationSpeed]);
 
-  const handleTouchEnd = useCallback(() => {
+  const handleTouchEnd = useCallback((): void => {
     setIsDragging(false);
   }, []);
 
@@ -430,7 +473,7 @@ export default function SphereImageGrid({
 
   const worldPositions = calculateWorldPositions();
 
-  const renderImageNode = useCallback((image, index) => {
+  const renderImageNode = useCallback((image: SphereImage, index: number): React.ReactNode => {
     const position = worldPositions[index];
 
     if (!position || !position.isVisible) return null;
@@ -456,7 +499,7 @@ export default function SphereImageGrid({
         onMouseLeave={() => setHoveredIndex(null)}
         onClick={() => setSelectedImage(image)}
       >
-        <div 
+        <div
           className="relative w-full h-full rounded-full overflow-hidden shadow-md"
           style={{
             borderRadius: '50%',
@@ -491,7 +534,7 @@ export default function SphereImageGrid({
     );
   }, [worldPositions, baseImageSize, containerSize, hoveredIndex]);
 
-  const renderSpotlightModal = () => {
+  const renderSpotlightModal = (): React.ReactNode => {
     if (!selectedImage) return null;
 
     return (
@@ -502,7 +545,7 @@ export default function SphereImageGrid({
       >
         <div
           className="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
           style={{ animation: 'scaleIn 0.3s ease-out' }}
         >
           <div className="relative aspect-square">

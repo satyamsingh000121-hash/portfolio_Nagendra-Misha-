@@ -1,13 +1,19 @@
 import './globals.css';
 import fs from 'fs';
 import path from 'path';
+import type { Metadata } from 'next';
+import React from 'react';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Marie Forleo | #1 NYT Bestselling Author & Founder of B-School',
   description: 'Marie Forleo, named by Oprah as a thought leader for the next generation, helps entrepreneurs achieve financial freedom, impact & success worldwide.',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactElement {
   // Try test111 folder first (local dev with scraped files), then fallback to public/css
   const cssPathTest111 = path.join(
     process.cwd(),
@@ -22,8 +28,8 @@ export default function RootLayout({ children }) {
   const cssContent = fs.existsSync(cssPathTest111)
     ? fs.readFileSync(cssPathTest111, 'utf-8')
     : fs.existsSync(cssPathPublic)
-    ? fs.readFileSync(cssPathPublic, 'utf-8')
-    : '';
+      ? fs.readFileSync(cssPathPublic, 'utf-8')
+      : '';
 
   return (
     <html lang="en" className="w-mod-js w-mod-ix">

@@ -3,23 +3,44 @@
 // Focus Reveal — Originkit (framer-motion)
 // Adapted from the Originkit preview defaults.
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
-import {
+import React, {
   useEffect,
   useMemo,
   useRef,
 } from "react";
+import {
+  motion,
+  useReducedMotion,
+  Variants,
+} from "framer-motion";
+
+export interface FocusRevealTransition {
+  type?: string;
+  duration?: number;
+  delay?: number;
+  ease?: string | number[];
+  staggerChildren?: number;
+}
+
+export interface FocusRevealProps {
+  text?: string;
+  font?: React.CSSProperties;
+  color?: string;
+  className?: string;
+  as?: "h1" | "h2" | "h3" | "p" | "span";
+  blur?: number;
+  staggerFrom?: "start" | "end" | "center" | "random";
+  transition?: FocusRevealTransition;
+  onComplete?: () => void;
+}
 
 const START_SCALE = 1.45;
 /** Cap blur animation (perf + project motion rules) */
 const MAX_BLUR = 20;
 /** ease-out-cubic */
-const EASE_OUT = [0.215, 0.61, 0.355, 1];
+const EASE_OUT: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
 
-const DEFAULT_TRANSITION = {
+const DEFAULT_TRANSITION: FocusRevealTransition = {
   type: "tween",
   duration: 0.8,
   delay: 0,
@@ -27,7 +48,7 @@ const DEFAULT_TRANSITION = {
   staggerChildren: 0.06,
 };
 
-const MOTION_TAGS = {
+const MOTION_TAGS: Record<"h1" | "h2" | "h3" | "p" | "span", React.ElementType> = {
   h1: motion.h1,
   h2: motion.h2,
   h3: motion.h3,
@@ -35,7 +56,7 @@ const MOTION_TAGS = {
   span: motion.span,
 };
 
-const resolveEase = (ease) => {
+const resolveEase = (ease?: string | number[]): any => {
   if (Array.isArray(ease)) return ease;
   if (ease === "linear") return "linear";
   if (ease === "easeIn") return [0.55, 0.085, 0.68, 0.53];
@@ -43,7 +64,12 @@ const resolveEase = (ease) => {
   return EASE_OUT;
 };
 
-const buildStaggerDelays = (count, each, from, baseDelay) => {
+const buildStaggerDelays = (
+  count: number,
+  each: number,
+  from: "start" | "end" | "center" | "random",
+  baseDelay: number
+): number[] => {
   if (count === 0) return [];
 
   if (from === "random") {
@@ -58,7 +84,7 @@ const buildStaggerDelays = (count, each, from, baseDelay) => {
   if (from === "end") {
     return Array.from(
       { length: count },
-      (_, i) => baseDelay + (count - 1 - i) * each,
+      (_, i) => baseDelay + (count - 1 - i) * each
     );
   }
 
@@ -66,14 +92,14 @@ const buildStaggerDelays = (count, each, from, baseDelay) => {
     const mid = (count - 1) / 2;
     return Array.from(
       { length: count },
-      (_, i) => baseDelay + Math.abs(i - mid) * each,
+      (_, i) => baseDelay + Math.abs(i - mid) * each
     );
   }
 
   return Array.from({ length: count }, (_, i) => baseDelay + i * each);
 };
 
-const FocusReveal = ({
+export const FocusReveal: React.FC<FocusRevealProps> = ({
   text = "FOCUS REVEAL",
   font,
   color,
@@ -85,14 +111,14 @@ const FocusReveal = ({
   onComplete,
 }) => {
   const reduceMotion = useReducedMotion();
-  const completedRef = useRef(false);
-  const onCompleteRef = useRef(onComplete);
+  const completedRef = useRef<boolean>(false);
+  const onCompleteRef = useRef<(() => void) | undefined>(onComplete);
   onCompleteRef.current = onComplete;
 
-  const duration = transition.duration ?? DEFAULT_TRANSITION.duration;
-  const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay;
+  const duration = transition.duration ?? DEFAULT_TRANSITION.duration!;
+  const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay!;
   const staggerEach =
-    transition.staggerChildren ?? DEFAULT_TRANSITION.staggerChildren;
+    transition.staggerChildren ?? DEFAULT_TRANSITION.staggerChildren!;
   const ease = transition.ease ?? DEFAULT_TRANSITION.ease;
 
   const chars = useMemo(() => text.split(""), [text]);
@@ -108,14 +134,14 @@ const FocusReveal = ({
         chars.length,
         skipMotion ? 0 : staggerEach,
         staggerFrom,
-        baseDelay,
+        baseDelay
       ),
-    [chars.length, skipMotion, staggerFrom, baseDelay, staggerEach],
+    [chars.length, skipMotion, staggerFrom, baseDelay, staggerEach]
   );
 
   /** Split into words so we wrap between words, not mid-character */
   const words = useMemo(() => {
-    const parts = [];
+    const parts: { chars: string[]; startIndex: number }[] = [];
     let startIndex = 0;
     const tokens = text.split(/(\s+)/);
 
@@ -138,16 +164,16 @@ const FocusReveal = ({
     onCompleteRef.current();
   }, [skipMotion]);
 
-  const handleCharComplete = (index) => {
+  const handleCharComplete = (index: number) => {
     if (index !== lastIndex || completedRef.current) return;
     completedRef.current = true;
     onCompleteRef.current?.();
   };
 
   // Stable tag component — never call motion.create() during render
-  const MotionTag = MOTION_TAGS[Tag];
+  const MotionTag = MOTION_TAGS[Tag] || MOTION_TAGS.h1;
 
-  const rootStyle = {
+  const rootStyle: React.CSSProperties = {
     margin: 0,
     display: "block",
     width: "100%",
@@ -155,20 +181,22 @@ const FocusReveal = ({
     ...(font ?? null),
   };
 
-  const hidden = skipMotion
-    ? { opacity: 0 }
-    : {
-        opacity: 0,
-        scale: START_SCALE,
-        filter: `blur(${safeBlur}px)`,
-      };
-  const visible = skipMotion
-    ? { opacity: 1 }
-    : {
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-      };
+  const spanVariants: Variants = {
+    hidden: skipMotion
+      ? { opacity: 0 }
+      : {
+          opacity: 0,
+          scale: START_SCALE,
+          filter: `blur(${safeBlur}px)`,
+        },
+    visible: skipMotion
+      ? { opacity: 1 }
+      : {
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+        },
+  };
 
   return (
     <MotionTag aria-label={text} className={className} style={rootStyle}>
@@ -190,8 +218,9 @@ const FocusReveal = ({
                 <motion.span
                   key={`${char}-${index}`}
                   className="inline-block will-change-[transform,opacity,filter]"
-                  initial={hidden}
-                  whileInView={visible}
+                  variants={spanVariants}
+                  initial="hidden"
+                  whileInView="visible"
                   viewport={{ once: false, amount: 0.3 }}
                   transition={{
                     type: "tween",

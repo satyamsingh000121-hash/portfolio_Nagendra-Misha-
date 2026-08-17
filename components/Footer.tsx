@@ -1,11 +1,20 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
-import { Heart, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
-export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+const footerLink: React.CSSProperties = {
+  textDecoration: 'none',
+  color: '#94A3B8',
+  transition: 'color 0.2s',
+};
+
+export default function Footer(): React.ReactElement {
+  const scrollToTop = (): void => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -70,9 +79,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const footerLink = {
-  textDecoration: 'none',
-  color: '#94A3B8',
-  transition: 'color 0.2s'
-};

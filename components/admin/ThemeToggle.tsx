@@ -41,7 +41,7 @@ export function ThemeToggle({ theme = 'light', onToggle }: ThemeToggleProps) {
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           user-select: none;
-          background-color: var(--card, #ffffff);
+          background-color: var(--card, #b3aeae);
           border: 2px solid var(--border, #e2e8f0);
           box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
           margin: 0;

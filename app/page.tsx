@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { ZoomParallax } from '../components/ui/zoom-parallax';
 import LogoCloud from '../components/ui/logo-cloud-15';
@@ -44,10 +44,9 @@ const parallaxImages = [
   },
 ];
 
-
-export default function Home() {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function Home(): React.ReactElement {
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
     <div className="page_wrap">
@@ -176,7 +175,7 @@ export default function Home() {
             <a
               href="#"
               className="watch-video-lightbox-link w-inline-block w-lightbox"
-              onClick={(e) => {
+              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                 e.preventDefault();
                 setIsVideoModalOpen(true);
               }}
@@ -243,7 +242,7 @@ export default function Home() {
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
                 background: '#000'
               }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
             >
               <button
                 onClick={() => setIsVideoModalOpen(false)}
@@ -293,7 +292,7 @@ export default function Home() {
                 </p>
 
                 {/* Expanded Width Input Form */}
-                <form onSubmit={(e) => e.preventDefault()} style={{ maxWidth: '780px', margin: '0 auto' }}>
+                <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()} style={{ maxWidth: '780px', margin: '0 auto' }}>
                   <div className="training-input-group" style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
                     <input
                       type="text"
@@ -347,7 +346,7 @@ export default function Home() {
                 </form>
 
                 <p style={{ fontSize: '0.75rem', color: '#666666', lineHeight: '1.45', maxWidth: '720px', margin: '0 auto' }}>
-                  By entering your info, you&apos;ll become an MF Insider – with FREE access to exclusive insights, private Q&As, and inspiring episodes of MarieTV, delivered with love to your inbox. (Unsub anytime in a click.) You also agree to our <a href="#terms" style={{ color: '#666', textDecoration: 'underline' }}>Terms of Use</a> and <a href="#privacy" style={{ color: '#666', textDecoration: 'underline' }}>Privacy Policy</a>.
+                  By entering your info, you&apos;ll become an MF Insider – with FREE access to exclusive insights, private Q&amp;As, and inspiring episodes of MarieTV, delivered with love to your inbox. (Unsub anytime in a click.) You also agree to our <a href="#terms" style={{ color: '#666', textDecoration: 'underline' }}>Terms of Use</a> and <a href="#privacy" style={{ color: '#666', textDecoration: 'underline' }}>Privacy Policy</a>.
                 </p>
               </div>
 
@@ -439,9 +438,6 @@ export default function Home() {
                   Since 2011, he has transformed ideas into impactful businesses, driven by innovation, leadership, and sustainable growth.
                 </p>
 
-
-
-
                 <section id="buttonui" className="buttonui" style={{ marginTop: '24px' }}>
                   <RevealHoverButton defaultText="Learn More" hoverText="Thanks" />
                 </section>
@@ -472,7 +468,6 @@ export default function Home() {
                 />
               </div>
 
-
               {/* Circular Share Button Section */}
               <section
                 id="uisection"
@@ -490,8 +485,6 @@ export default function Home() {
                 <CircularShareButton />
               </section>
 
-
-
             </div>
           </div>
         </section>
@@ -506,7 +499,7 @@ export default function Home() {
           <div className="w-layout-blockcontainer content_container_fill u-container w-container">
             <div className="content_layout_split">
               <div className="w-layout-vflex u-vflex">
-                <h2 className="eyebrow">BUSINESS & LEADERSHIP</h2>
+                <h2 className="eyebrow">BUSINESS &amp; LEADERSHIP</h2>
                 <FocusReveal
                   text="TURNING VISION INTO REAL BUSINESS GROWTH."
                   as="h3"
@@ -525,9 +518,7 @@ export default function Home() {
                 />
                 <p>
                   Nagendra Mishra combines entrepreneurial experience, strategic leadership, and innovation to drive business growth, create opportunities, and build long-term value.
-
                   His approach is focused on smart strategy, meaningful connections, and empowering businesses to achieve sustainable success.
-
                 </p>
                 <a href="https://www.jointimegenius.com/e/join" target="_blank" rel="noreferrer" className="tg-button u-button w-button">
                   EXPLORE HIS JOURNEY
@@ -553,7 +544,7 @@ export default function Home() {
               <div className="w-layout-vflex u-vflex">
                 <h2 className="eyebrow">Watch and learn</h2>
                 <FocusReveal
-                  text="POWERFUL SPEECHES ON BUSINESS GROWTH & LEADERSHIP"
+                  text="POWERFUL SPEECHES ON BUSINESS GROWTH &amp; LEADERSHIP"
                   as="h3"
                   className="serif_display_heading section_heading u-heading"
                   color="#1d1b1c"
@@ -831,7 +822,7 @@ export default function Home() {
                             <div>#</div>
                             <div>04</div>
                           </div>
-                          <h3 style={{ fontFamily: 'ivypresto-display, "Cormorant Garamond", "Bodoni Moda", Didot, serif', fontWeight: 200, fontSize: '2.1rem', lineHeight: 1.15, color: '#1D1B1C' }}>From Challenges to Opportunities: The Entrepreneurial Mindset Behind Business Growth (Arrow wali position ke liye)</h3>
+                          <h3 style={{ fontFamily: 'ivypresto-display, "Cormorant Garamond", "Bodoni Moda", Didot, serif', fontWeight: 200, fontSize: '2.1rem', lineHeight: 1.15, color: '#1D1B1C' }}>From Challenges to Opportunities: The Entrepreneurial Mindset Behind Business Growth</h3>
                         </div>
                         <div className="play-icon-circle" style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginLeft: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="#000000">
@@ -935,7 +926,7 @@ export default function Home() {
               </div>
 
               {/* MF Insider Subscription Form */}
-              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '16px' }}>
+              <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '16px' }}>
                 <input
                   type="text"
                   placeholder="First Name"
