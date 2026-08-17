@@ -5,9 +5,9 @@ import RotatingEarth from "@/components/ui/wireframe-dotted-globe";
 import OrbitControls from "@/components/originkit/ui/features-02/orbit-controls";
 
 const METRICS = [
-  { value: "100%", label: "Increase in Progress Tracking" },
-  { value: "50%", label: "Faster Project Completion Rates" },
-  { value: "90%", label: "Satisfaction Rate Among Users" },
+  { value: "15000 +", label: "Project delivered" },
+  { value: "15 +", label: "Business running" },
+  { value: "16 +", label: "Years of Experience" },
 ] as const;
 
 const Presence01 = () => {
@@ -28,8 +28,8 @@ const Presence01 = () => {
             {/* Interactive Dotted Rotating Earth */}
             <div className="relative w-full h-full cursor-grab active:cursor-grabbing z-10 touch-none flex items-center justify-center">
               <RotatingEarth
-                width={400}
-                height={400}
+                width={350}
+                height={350}
                 className="w-full h-full flex items-center justify-center"
               />
             </div>
